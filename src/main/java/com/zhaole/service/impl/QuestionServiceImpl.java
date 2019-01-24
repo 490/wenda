@@ -1,5 +1,7 @@
 package com.zhaole.service.impl;
 
+import com.zhaole.dao.QuestionDAO;
+import com.zhaole.dao.UserDAO;
 import com.zhaole.model.Question;
 import com.zhaole.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,10 @@ import java.util.List;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
+    @Autowired
+    QuestionDAO questionDAO;
     public List<Question> getLatestQuestions(int userId,int offset,int limit)
     {
-        return
+        return questionDAO.selectLatestQuestions(userId,offset,limit);
     }
 }
