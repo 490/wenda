@@ -18,7 +18,7 @@ import java.util.*;
  * created by zl on 2019/1/24 16:19
  */
 
-@Controller
+//@Controller
 public class IndexController
 {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
