@@ -17,13 +17,17 @@ public interface UserDAO
     String selectFields = " id, " + insertFields;
 
     @Insert({"insert into ", tableName, "(", insertFields,
-            ") values (#{name},#{password},#{salt},#{headUrl})"})    int addUser(User user);
+            ") values (#{name},#{password},#{salt},#{headUrl})"})
+    int addUser(User user);
 
     @Select({"select ", selectFields, " from ", tableName, " where id=#{id}"})
     User selectById(int id);
 
     @Update({"update ", tableName, " set password=#{password} where id=#{id}"})
     void updatePassword(User user);
+
+    @Select({"select ", selectFields, " from ", tableName, " where name=#{name}"})
+    User selectByName(String name);
 
     @Delete({"delete from ", tableName, " where id=#{id}"})
     void deleteById(int id);
