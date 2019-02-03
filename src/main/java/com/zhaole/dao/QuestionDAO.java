@@ -1,9 +1,7 @@
 package com.zhaole.dao;
 
 import com.zhaole.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +23,10 @@ public interface QuestionDAO
 
     List<Question> selectLatestQuestions(@Param("userId") int userId, @Param("offset") int offset,
                                          @Param("limit") int limit);
+
+    @Select({"select ", selectFields, " from ", tableName, " where id=#{id}"})
+    Question getById(int id);
+
+    @Update({"update ", tableName, " set comment_count = #{commentCount} where id=#{id}"})
+    int updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
 }

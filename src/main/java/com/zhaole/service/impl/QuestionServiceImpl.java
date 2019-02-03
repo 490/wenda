@@ -13,7 +13,8 @@ import java.util.List;
  * created by zl on 2019/1/24 20:13
  */
 @Service
-public class QuestionServiceImpl implements QuestionService {
+public class QuestionServiceImpl implements QuestionService
+{
 
     @Autowired
     QuestionDAO questionDAO;
