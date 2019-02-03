@@ -78,7 +78,7 @@ public class SensitiveService implements InitializingBean
         int position = 0;//当前比较位置
 
             /*    ↓position
-                  ssssadsadfaiwoueboaibwsafsdfafas;
+                  哈哈赌就博啊啊;
                   ↑
                      root     (tmp)
                     / |  \
@@ -89,7 +89,7 @@ public class SensitiveService implements InitializingBean
         while(position < text.length())
         {
             char c = text.charAt(position);
-            if(isSymbol(c))
+            if(isSymbol(c))//符号直接跳过
             {
                 if(temp == root)
                 {
@@ -99,7 +99,7 @@ public class SensitiveService implements InitializingBean
                 position++;
                 continue;
             }
-            temp = temp.getSubNode(c);
+            temp = temp.getSubNode(c);//获取root的以赌为key的value--即node1
             if(temp == null)
             {
                 //以begin开头的字符串不存在敏感词
@@ -124,7 +124,7 @@ public class SensitiveService implements InitializingBean
         return result.toString();
     }
 
-    private void addWord(String lineTxt)
+    private void addWord(String lineTxt)//某一行的文字
     {
         TrieNode temp = root;
         for(int i = 0;i < lineTxt.length();++i)
@@ -133,13 +133,13 @@ public class SensitiveService implements InitializingBean
             if(isSymbol(c)){
                 continue;
             }
-            TrieNode node = temp.getSubNode(c);
+            TrieNode node = temp.getSubNode(c);//得到以赌为key的一个trienode；；；以博为key
             if(node == null)
             {
                 node = new TrieNode();
-                temp.addSubNode(c,node);
+                temp.addSubNode(c,node);//root拥有了一个map《赌，node1》；；；上一个node1拥有了一个map《博，node2》
             }
-            temp = node;
+            temp = node;//tmp=这个新的子节点node1
             if(i == lineTxt.length()-1)
             {
                 temp.setKeywordEnd(true);
