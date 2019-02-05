@@ -15,5 +15,5 @@ public interface UserService
     public Map<String, Object> login(String username,String password);
     public String addLoginTicket(int userId);
     public void logout(String ticket);
-
+    public User selectByName(String name);
 }
