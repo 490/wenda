@@ -3,11 +3,12 @@ package com.zhaole.dao;
 import com.zhaole.model.Comment;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
-@Component
+@Repository
 public interface CommentDAO {
     String tableName = " comment ";
     String insertField = " user_id, content, created_date, entity_id, entity_type, status ";
