@@ -83,6 +83,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.13</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
     </dependencies>
 
