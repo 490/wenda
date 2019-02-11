@@ -19,6 +19,8 @@ public class EventProducer {
 
     public boolean fireEvent(EventModel eventModel) {
         try {
+            //可以用blockingQueue
+            //BlockingQueue<EventModel> q = new ArrayBlockingQueue<EventModel>(10);
             String json = JSONObject.toJSONString(eventModel);
             String key = RedisKeyUtil.getEventQueueKey();
             jedisAdapter.lpush(key, json);

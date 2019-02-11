@@ -10,14 +10,20 @@ import java.util.Map;
  * Created by nowcoder on 2016/7/30.
  */
 public class EventModel {
+    //事件类型
     private EventType type;
+    //触发者
     private int actorId;
+    //触发载体
     private int entityType;
+    //
     private int entityId;
+    //载体和哪个人有关，比如站内信的接收者
     private int entityOwnerId;
-
+    //拓展对象，类似于ViewObject
     private Map<String, String> exts = new HashMap<String, String>();
 
+    //反射要创建对象，必须有默认构造函数
     public EventModel() {
 
     }
