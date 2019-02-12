@@ -22,8 +22,8 @@ public class EventProducer {
             //可以用blockingQueue
             //BlockingQueue<EventModel> q = new ArrayBlockingQueue<EventModel>(10);
             String json = JSONObject.toJSONString(eventModel);
-            String key = RedisKeyUtil.getEventQueueKey();
-            jedisAdapter.lpush(key, json);
+            String key = RedisKeyUtil.getEventQueueKey();//STRING EVENT_QUEUE
+            jedisAdapter.lpush(key, json);//把model放在list里，list名字是event-queue
             return true;
         } catch (Exception e) {
             return false;

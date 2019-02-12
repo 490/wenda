@@ -17,7 +17,6 @@ import java.util.List;
 
 
 /**
- * Created by nowcoder on 2016/7/30.
  */
 @Service
 public class JedisAdapter implements InitializingBean {

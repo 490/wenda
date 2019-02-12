@@ -7,30 +7,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by nowcoder on 2016/7/30.
  */
 @Service
-public class LikeServiceImpl implements LikeService {
+public class LikeServiceImpl implements LikeService
+{
     @Autowired
     JedisAdapter jedisAdapter;
 
 
-    public long getLikeCount(int entityType, int entityId) {
+    public long getLikeCount(int entityType, int entityId)
+    {
         String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
         return jedisAdapter.scard(likeKey);
     }
 
-    public int getLikeStatus(int userId, int entityType, int entityId) {
+    public int getLikeStatus(int userId, int entityType, int entityId)
+    {
         String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
-        if (jedisAdapter.sismember(likeKey, String.valueOf(userId))) {
+        if (jedisAdapter.sismember(likeKey, String.valueOf(userId)))
+        {
             return 1;
         }
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType, entityId);
         return jedisAdapter.sismember(disLikeKey, String.valueOf(userId)) ? -1 : 0;
     }
-
-    public long like(int userId, int entityType, int entityId) {
+    //返回like数量
+    public long like(int userId, int entityType, int entityId)
+    {
+        //like:entitytype:entityid
         String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
+        //<like:entitytype:entityid , userid>
         jedisAdapter.sadd(likeKey, String.valueOf(userId));
 
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType, entityId);
@@ -39,7 +45,8 @@ public class LikeServiceImpl implements LikeService {
         return jedisAdapter.scard(likeKey);
     }
 
-    public long disLike(int userId, int entityType, int entityId) {
+    public long disLike(int userId, int entityType, int entityId)
+    {
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType, entityId);
         jedisAdapter.sadd(disLikeKey, String.valueOf(userId));
 

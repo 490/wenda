@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * Created by nowcoder on 2016/7/30.
  */
 @Service
 public class EventConsumer implements InitializingBean, ApplicationContextAware {
@@ -33,17 +32,23 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
     JedisAdapter jedisAdapter;
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception
+    {
         //通过spring的上下文可以知道有多少个EventHandler接口的实现类(从容器里找就不需要用配置文件等等，在初始化的时候就会注册好）
         Map<String, EventHandler> beans = applicationContext.getBeansOfType(EventHandler.class);
-        if (beans != null) {
-            for (Map.Entry<String, EventHandler> entry : beans.entrySet()) {
+        if (beans != null)
+        {
+            for (Map.Entry<String, EventHandler> entry : beans.entrySet())
+            {
+                //得到这个eventHandler实现类的eventType
                 List<EventType> eventTypes = entry.getValue().getSupportEventTypes();
-
-                for (EventType type : eventTypes) {
-                    if (!config.containsKey(type)) {
+                for (EventType type : eventTypes)
+                {
+                    if (!config.containsKey(type))
+                    {
                         config.put(type, new ArrayList<EventHandler>());
                     }
+                    //每个类型对应一个list，向list里添加value，即eventHandler。
                     config.get(type).add(entry.getValue());
                 }
             }
@@ -52,23 +57,29 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
         Thread thread = new Thread(new Runnable() {
             @Override
             //启动后，开启一个线程循环的去查queue里有没有event，如果有就调用List<EventHandler>一个一个处理
-            public void run() {
-                while(true) {
-                    String key = RedisKeyUtil.getEventQueueKey();
+            public void run()
+            {
+                while(true)
+                {
+                    String key = RedisKeyUtil.getEventQueueKey();//EVENT_QUEUE
                     List<String> events = jedisAdapter.brpop(0, key);
 
-                    for (String message : events) {
-                        if (message.equals(key)) {
+                    for (String message : events)
+                    {
+                        if (message.equals(key))
+                        {
                             continue;
                         }
                         //反序列化
                         EventModel eventModel = JSON.parseObject(message, EventModel.class);
-                        if (!config.containsKey(eventModel.getType())) {
+                        if (!config.containsKey(eventModel.getType()))
+                        {
                             logger.error("不能识别的事件");
                             continue;
                         }
 
-                        for (EventHandler handler : config.get(eventModel.getType())) {
+                        for (EventHandler handler : config.get(eventModel.getType()))
+                        {
                             handler.doHandle(eventModel);
                         }
                     }

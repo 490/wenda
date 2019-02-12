@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
+
 @Controller
 public class LikeController {
     @Autowired
@@ -31,6 +29,7 @@ public class LikeController {
     @Autowired
     CommentService commentService;
 
+    //Controller是一个事件生产者。
     @Autowired
     EventProducer eventProducer;
 
@@ -43,19 +42,25 @@ public class LikeController {
 
         Comment comment = commentService.getCommentById(commentId);
 
-        eventProducer.fireEvent(new EventModel(EventType.LIKE)
-                .setActorId(hostHolder.getUser().getId()).setEntityId(commentId)
-                .setEntityType(EntityType.ENTITY_COMMENT).setEntityOwnerId(comment.getUserId())
-                .setExt("questionId", String.valueOf(comment.getEntityId())));
-
+        eventProducer.fireEvent(//eventmodel放到一个redis 的list里
+                new EventModel(EventType.LIKE)
+                .setActorId(hostHolder.getUser().getId()) //当前登录用户
+                .setEntityId(commentId)
+                .setEntityType(EntityType.ENTITY_COMMENT)
+                .setEntityOwnerId(comment.getUserId())//写评论的人
+                .setExt("questionId", String.valueOf(comment.getEntityId()))//Map<String, String>
+        );
+        //like返回的是redis的scard命令。<like:entitytype:entityid , userid>这个key的数量
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId);
         return WendaUtil.getJSONString(0, String.valueOf(likeCount));
     }
 
     @RequestMapping(path = {"/dislike"}, method = {RequestMethod.POST})
     @ResponseBody
-    public String dislike(@RequestParam("commentId") int commentId) {
-        if (hostHolder.getUser() == null) {
+    public String dislike(@RequestParam("commentId") int commentId)
+    {
+        if (hostHolder.getUser() == null)
+        {
             return WendaUtil.getJSONString(999);
         }
 

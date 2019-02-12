@@ -6,9 +6,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
+
 public class EventModel {
     //事件类型
     private EventType type;

@@ -16,10 +16,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by nowcoder on 2016/7/30.
  */
 @Component
-public class LikeHandler implements EventHandler {
+public class LikeHandler implements EventHandler
+{
     @Autowired
     MessageService messageService;
 
@@ -27,7 +27,8 @@ public class LikeHandler implements EventHandler {
     UserService userService;
 
     @Override
-    public void doHandle(EventModel model) {
+    public void doHandle(EventModel model)
+    {
         Message message = new Message();
         message.setFromId(WendaUtil.SYSTEM_USERID);
         message.setToId(model.getEntityOwnerId());
@@ -40,7 +41,8 @@ public class LikeHandler implements EventHandler {
     }
 
     @Override
-    public List<EventType> getSupportEventTypes() {
+    public List<EventType> getSupportEventTypes()
+    {
         return Arrays.asList(EventType.LIKE);
     }
 }
