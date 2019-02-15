@@ -27,6 +27,14 @@ public class JedisAdapter implements InitializingBean {
         System.out.println(String.format("%d, %s", index, obj.toString()));
     }
 
+    public static void main(String[] argv) {
+        Jedis jedis = new Jedis("redis://192.168.7.125:6379/9");
+        jedis.flushDB();
+        jedis.set("hello", "world");
+        print(1, jedis.get("hello"));
+
+    }
+
 
     @Override
     public void afterPropertiesSet() throws Exception {
