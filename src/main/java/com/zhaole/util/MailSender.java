@@ -22,7 +22,8 @@ public class MailSender implements InitializingBean {
     private JavaMailSenderImpl mailSender;
 
 
-    public boolean sendWithHTMLTemplate(String to, String subject, String content) {
+    public boolean sendWithHTMLTemplate(String to, String subject, String content)
+    {
         try {
             String nick = MimeUtility.encodeText("MimeUtility.encodeText");
             InternetAddress from = new InternetAddress(nick + "<course@nowcoder.com>");
@@ -42,7 +43,8 @@ public class MailSender implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception
+    {
         mailSender = new JavaMailSenderImpl();
         mailSender.setUsername("course@nowcoder.com");
         mailSender.setPassword("NKnk123");

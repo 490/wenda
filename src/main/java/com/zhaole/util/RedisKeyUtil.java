@@ -32,6 +32,7 @@ public class RedisKeyUtil
     //获取每一个实体（问题或者是人）的粉丝对象的key
     public static String getFollowerKey(int entityId, int entityType)
     {
+        //"FOLLOEW:entityId:entityType"
         return FOLLOWER + SPLIT + String.valueOf(entityId) + SPLIT + String.valueOf(entityType);
     }
 

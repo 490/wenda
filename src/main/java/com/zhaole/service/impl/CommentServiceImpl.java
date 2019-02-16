@@ -42,5 +42,10 @@ public class CommentServiceImpl implements CommentService {
     {
         return commentDAO.getCommentById(id);
     }
+    public int getUserCommentCount(int userId)
+    {
+        return commentDAO.getUserCommentCount(userId);
+    }
+
 
 }

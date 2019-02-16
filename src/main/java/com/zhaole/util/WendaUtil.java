@@ -29,7 +29,8 @@ public class WendaUtil {
             int j = md.length;
             char str[] = new char[j * 2];
             int k = 0;
-            for (int i = 0; i < j; i++) {
+            for (int i = 0; i < j; i++)
+            {
                 byte byte0 = md[i];
                 str[k++] = hexDigits[byte0 >>> 4 & 0xf];
                 str[k++] = hexDigits[byte0 & 0xf];
@@ -40,23 +41,27 @@ public class WendaUtil {
             return null;
         }
     }
-    public static String getJSONString(int code) {
+    public static String getJSONString(int code)
+    {
         JSONObject json = new JSONObject();
         json.put("code", code);
         return json.toJSONString();
     }
 
-    public static String getJSONString(int code, String msg) {
+    public static String getJSONString(int code, String msg)
+    {
         JSONObject json = new JSONObject();
         json.put("code", code);
         json.put("msg", msg);
         return json.toJSONString();
     }
 
-    public static String getJSONString(int code, Map<String, Object> map) {
+    public static String getJSONString(int code, Map<String, Object> map)
+    {
         JSONObject json = new JSONObject();
         json.put("code", code);
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
+        for (Map.Entry<String, Object> entry : map.entrySet())
+        {
             json.put(entry.getKey(), entry.getValue());
         }
         return json.toJSONString();

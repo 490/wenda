@@ -4,6 +4,7 @@ import com.zhaole.model.Comment;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -30,4 +31,7 @@ public interface CommentDAO {
 
     @Update({"update comment set status=#{status} where id=#{id}"})
     int updateStatus(@Param("id") int id, @Param("status") int status);
+
+    @Select({"select count(id) from ",tableName, "where user_id=#{userId}"})
+    int getUserCommentCount(int userId);
 }

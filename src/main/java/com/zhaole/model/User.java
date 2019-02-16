@@ -3,7 +3,8 @@ package com.zhaole.model;
 /**
  * created by zl on 2019/1/24 15:51
  */
-public class User {
+public class User
+{
     private int id;
     private String name;
     private String password;
