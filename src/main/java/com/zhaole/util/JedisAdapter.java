@@ -52,6 +52,24 @@ public class JedisAdapter implements InitializingBean
         return null;
     }
 
+    //返回列表 key 中指定区间内的元素，区间以偏移量 start 和 stop 指定。
+    public List<String> lrange(String key, int start, int end)
+    {
+        Jedis jedis = null;
+        try{
+            jedis = pool.getResource();
+            return jedis.lrange(key, start, end);
+        }catch (Exception e){
+            logger.error("取值发生异常" + e.getMessage());
+        }finally {
+            if (jedis != null)
+            {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
     //multi开启事务执行之后再zsort中返回的是list
     //(事务块内所有命令的返回值，按命令执行的先后顺序排列。 当操作被打断时，返回空值 nil )
     public List<Object> exec(Transaction tx, Jedis jedis)

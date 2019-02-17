@@ -1,7 +1,8 @@
 package com.zhaole.controller;
 
-import com.zhaole.model.Question;
-import com.zhaole.model.ViewObject;
+import com.zhaole.model.*;
+import com.zhaole.service.CommentService;
+import com.zhaole.service.FollowService;
 import com.zhaole.service.QuestionService;
 import com.zhaole.service.UserService;
 import org.apache.ibatis.annotations.Mapper;
@@ -31,6 +32,33 @@ public class HomeController
     QuestionService questionService;
     @Autowired
     UserService userService;
+    @Autowired
+    FollowService followService;
+    @Autowired
+    HostHolder hostHolder;
+    @Autowired
+    CommentService commentService;
+
+    @RequestMapping(path = {"/user/{userId}","/index"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String userIndex(Model model, @PathVariable("userId") int userId)
+    {
+        model.addAttribute("vos", getQuestions(userId, 0, 10));
+        User user=  userService.getUser(userId);
+        ViewObject viewObject = new ViewObject();
+        viewObject.set("user", user);
+        viewObject.set("commentCount", commentService.getUserCommentCount(userId));
+        viewObject.set("followerCount", followService.getFollowerCount(userId, EntityType.ENTITY_USER));
+        viewObject.set("followeeCount", followService.getFolloweeCount(userId, EntityType.ENTITY_USER));
+        if(hostHolder.getUser() != null)
+        {
+            viewObject.set("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId));
+        }else {
+            viewObject.set("followed", false);
+        }
+        model.addAttribute("profileUser", viewObject);
+        return "profile";
+    }
+
 
     private List<ViewObject> getQuestions(int userId,int offset, int limit)
     {
@@ -51,14 +79,6 @@ public class HomeController
                         @RequestParam(value = "pop",defaultValue = "0" ) int pop)
     {
         model.addAttribute("viewObjectList",getQuestions(0,0,10));
-        return "index";
-    }
-
-    @RequestMapping(path = {"/user/{userId}"},method = {RequestMethod.GET,RequestMethod.POST})
-    public String userIndex(Model model,
-                            @PathVariable("userId") int userId)
-    {
-        model.addAttribute("viewObjectList",getQuestions(userId,0,10));
         return "index";
     }
 
