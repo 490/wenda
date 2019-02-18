@@ -49,6 +49,7 @@ public class FollowController
         //返回是否关注成功
         boolean ret = followService.follow(hostHolder.getUser().getId(),userId,EntityType.ENTITY_USER);
 
+        //jedisAdapter.lpush(key, toJSONString(eventModel))
         eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
                                     .setActorId(hostHolder.getUser().getId())
                                     .setEntityId(userId)

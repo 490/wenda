@@ -25,6 +25,9 @@ import java.util.*;
 @Component
 public class FeedHandler implements EventHandler
 {
+    /*
+    评论后立即发出一条新鲜事
+    * */
     @Autowired
     FollowService followService;
     @Autowired
@@ -75,7 +78,7 @@ public class FeedHandler implements EventHandler
         feed.setCreatedDate(new Date());
         feed.setUserId(eventModel.getActorId());
         feed.setType(eventModel.getType().getValue());
-        feed.setData(buildFeedData(eventModel));
+        feed.setData(buildFeedData(eventModel));//例如：谁评论了什么问题
         if(feed.getData() == null)
         {
             return;

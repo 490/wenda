@@ -5,13 +5,14 @@
     <sql id="table">feed</sql>
     <sql id="selectFields">id, created_date,user_id,data,type
     </sql>
-    <select id="selectUserFeed" resultType="com.zhaole.model.Feed">
+    <select id="selectUserFeeds" resultType="com.zhaole.model.Feed">
         SELECT
         <include refid="selectFields"/>
         FROM
         <include refid="table"/>
-
+        <!--&lt是xml里的less than-->
         WHERE id &lt; #{maxId}
+        <!--说明登陆了。每个#{item}是userIds里面的元素-->
         <if test="userIds.size() != 0">
             AND user_id in
             <foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">

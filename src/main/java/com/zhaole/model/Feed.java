@@ -10,7 +10,7 @@ import java.util.Date;
 public class Feed
 {
     private int id;
-    private int type;//新鲜事类型
+    private int type;//新鲜事类型,如这条新鲜事是a关注b，是x评论y
     private int userId;//
     private Date createdDate;
     private String data;

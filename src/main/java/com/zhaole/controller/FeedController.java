@@ -38,6 +38,7 @@ public class FeedController
         List<Integer> followees = new ArrayList<>();
         if(localUserId !=0)
         {
+            //找到所有我关注的人
             followees = followService.getFollowees(localUserId, EntityType.ENTITY_USER, Integer.MAX_VALUE);
         }
         List<Feed> feeds = feedService.getUserFeeds(Integer.MAX_VALUE, followees, 10);
@@ -49,7 +50,7 @@ public class FeedController
     private String getPushFeeds(Model model)
     {
         int localUserId = hostHolder.getUser()==null ? 0 : hostHolder.getUser().getId();
-        //从这个redis中把ID取出来就可以了 之前在handler中已经推进去了然后现在取出来就可以了
+        //从这个redis中把ID取出来就可以了 之前在Feedhandler中的doHandle已经推给我了，推进去了然后现在取出来就可以了
         List<String> feedsId = jedisAdapter.lrange(RedisKeyUtil.getTimelineKey(localUserId),0,10);
         List<Feed> feeds = new ArrayList<>();
         for(String feedId : feedsId)
