@@ -1,9 +1,8 @@
 package com.zhaole.controller;
 
 
-import com.zhaole.model.HostHolder;
-import com.zhaole.model.Question;
-import com.zhaole.service.QuestionService;
+import com.zhaole.model.*;
+import com.zhaole.service.*;
 import com.zhaole.util.WendaUtil;
 import org.apache.catalina.Host;
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,13 +26,69 @@ public class QuestionController
     QuestionService questionService;
     @Autowired
     HostHolder hostHolder;
+    @Autowired
+    CommentService commentService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    LikeService likeService;
+    @Autowired
+    FollowService followService;
 
     @RequestMapping(value = "/question/{qid}",method = {RequestMethod.GET})
     public String questionDetail(Model model, @PathVariable("qid") int qid)
     {
         Question question = questionService.getById(qid);
-        model.addAttribute("question",question);
+        model.addAttribute("question", question);
+        model.addAttribute("user", userService.getUser(question.getUserId()));
 
+        List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESTION);
+        List<ViewObject> comments = new ArrayList<>();
+
+        for (Comment comment : commentList)
+        {
+            ViewObject vo = new ViewObject();
+            vo.set("comment", comment);
+
+            //判断是否是我喜欢的
+            if (hostHolder.getUser() == null)
+            {
+                vo.set("liked", 0);
+            } else {
+                vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+            }
+
+            vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
+            vo.set("user", userService.getUser(comment.getUserId()));
+            comments.add(vo);
+        }
+
+        model.addAttribute("comments", comments);
+
+        //获取关注的问题信息
+        List<Integer> users = followService.getFollowers(qid, EntityType.ENTITY_QUESTION, 20);
+        List<ViewObject> followers = new ArrayList<>();
+        for (Integer userId : users)
+        {
+            ViewObject vo = new ViewObject();
+            User user = userService.getUser(userId);
+            if (user == null)
+            {
+                continue;
+            }
+            vo.set("name", user.getName());
+            vo.set("head_url", user.getHeadUrl());
+            vo.set("id", user.getId());
+            followers.add(vo);
+        }
+        model.addAttribute("followUsers", followers);
+        if (hostHolder.getUser() != null)
+        {
+            model.addAttribute("followed", followService.isFollower(hostHolder.getUser().getId(), qid, EntityType.ENTITY_QUESTION));
+
+        } else {
+            model.addAttribute("followed", false);
+        }
         return "detail";
     }
 
