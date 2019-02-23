@@ -3,9 +3,11 @@ package com.zhaole.configuration;
 import com.zhaole.interceptor.LoginRequiredInterceptor;
 import com.zhaole.interceptor.PasswordInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -13,7 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 //不需要调用，会自动执行
 @Component
-public class WendaWebConfiguration extends WebMvcConfigurationSupport
+@Configuration
+public class WendaWebConfiguration implements WebMvcConfigurer
 {
     @Autowired
     PasswordInterceptor passwordInterceptor;
@@ -27,6 +30,6 @@ public class WendaWebConfiguration extends WebMvcConfigurationSupport
         //注意拦截器顺序，因为hosthold变量的定义和使用顺序。
         //在某些页面才需要第二个拦截器
         registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/user/*");
-        super.addInterceptors(registry);
+      //  super.addInterceptors(registry);
     }
 }
