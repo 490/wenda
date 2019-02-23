@@ -78,7 +78,7 @@ public class HomeController
     public String index(Model model,
                         @RequestParam(value = "pop",defaultValue = "0" ) int pop)
     {
-        model.addAttribute("viewObjectList",getQuestions(0,0,10));
+        model.addAttribute("vos",getQuestions(0,0,10));
         return "index";
     }
 

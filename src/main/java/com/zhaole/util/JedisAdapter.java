@@ -100,7 +100,7 @@ public class JedisAdapter implements InitializingBean
     @Override
     public void afterPropertiesSet() throws Exception
     {
-        pool = new JedisPool("redis://localhost:6379/10");
+        pool = new JedisPool("redis://192.168.7.125:6379/10");
     }
 
     //Redis Zrevrange 命令返回有序集中，指定区间内的成员。
