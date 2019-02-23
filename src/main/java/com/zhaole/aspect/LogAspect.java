@@ -20,14 +20,17 @@ import java.util.Date;
 public class LogAspect
 {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
-
+    //* 返回值。类。方法。（参数）
     @Before("execution(* com.zhaole.controller.*Controller.*(..))")
     public void beforeMethod(JoinPoint joinPoint)
     {
         StringBuilder stringBuilder = new StringBuilder();
         for(Object object: joinPoint.getArgs())
         {
-            stringBuilder.append("args:" + object.toString() +"|");
+            if(object != null)
+            {
+                stringBuilder.append("args:" + object.toString() +"|");
+            }
         }
         logger.info("before method:" + stringBuilder.toString());
     }
