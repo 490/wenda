@@ -37,6 +37,7 @@ public class LikeServiceImpl implements LikeService
         //like:entitytype:entityid
         String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
         //<like:entitytype:entityid , userid>
+        System.out.println("likeKey::"+likeKey+",,,userid:::"+userId);
         jedisAdapter.sadd(likeKey, String.valueOf(userId));
 
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType, entityId);

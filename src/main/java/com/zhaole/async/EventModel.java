@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class EventModel {
+public class EventModel
+{
     //事件类型
     private EventType type;
     //触发者

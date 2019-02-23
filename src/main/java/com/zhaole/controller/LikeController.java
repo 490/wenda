@@ -1,5 +1,6 @@
 package com.zhaole.controller;
 
+import com.zhaole.aspect.LogAspect;
 import com.zhaole.async.EventModel;
 import com.zhaole.async.EventProducer;
 import com.zhaole.async.EventType;
@@ -10,6 +11,8 @@ import com.zhaole.service.CommentService;
 import com.zhaole.service.LikeService;
 import com.zhaole.service.MessageService;
 import com.zhaole.util.WendaUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-public class LikeController {
+public class LikeController
+{
     @Autowired
     LikeService likeService;
 
@@ -32,11 +36,15 @@ public class LikeController {
     //Controller是一个事件生产者。
     @Autowired
     EventProducer eventProducer;
+    private static final Logger logger = LoggerFactory.getLogger(LikeController.class);
 
     @RequestMapping(path = {"/like"}, method = {RequestMethod.POST})
     @ResponseBody
-    public String like(@RequestParam("commentId") int commentId) {
-        if (hostHolder.getUser() == null) {
+    public String like(@RequestParam("commentId") int commentId)
+    {
+        logger.info("--------likeController.like()----------");
+        if (hostHolder.getUser() == null)
+        {
             return WendaUtil.getJSONString(999);
         }
 

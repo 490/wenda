@@ -38,12 +38,14 @@ public class QuestionController
     @RequestMapping(value = "/question/{qid}",method = {RequestMethod.GET})
     public String questionDetail(Model model, @PathVariable("qid") int qid)
     {
+        logger.info("↓↓↓↓↓↓------questionController.questionDetail()----------");
+
         Question question = questionService.getById(qid);
         model.addAttribute("question", question);
         model.addAttribute("user", userService.getUser(question.getUserId()));
 
         List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESTION);
-        List<ViewObject> comments = new ArrayList<>();
+        List<ViewObject> comments = new ArrayList<ViewObject>();
 
         for (Comment comment : commentList)
         {
@@ -59,6 +61,7 @@ public class QuestionController
             }
 
             vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
+
             vo.set("user", userService.getUser(comment.getUserId()));
             comments.add(vo);
         }
@@ -89,6 +92,7 @@ public class QuestionController
         } else {
             model.addAttribute("followed", false);
         }
+        logger.info("↑↑↑↑↑↑------questionController.questionDetail()----------");
         return "detail";
     }
 

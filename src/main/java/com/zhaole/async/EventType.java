@@ -2,7 +2,8 @@ package com.zhaole.async;
 
 /**
  */
-public enum EventType {
+public enum EventType
+{
     LIKE(0),
     COMMENT(1),
     LOGIN(2),

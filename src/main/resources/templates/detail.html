@@ -36,7 +36,7 @@
                             <#list followUsers as vo>
                             <a class="zm-item-link-avatar js-user-${vo.id}" href="/user/${vo.id}"
                                data-original_title="${vo.name}">
-                                <img src="${vo.head_url}"
+                                <img src="${vo.headUrl}"
                                      class="zm-item-img-avatar"></a>
                             </#list>
                         </div>
@@ -79,7 +79,7 @@
                         <div class="zm-item-answer-author-info">
                             <a class="zm-item-link-avatar avatar-link" href="" target="_blank"
                                data-tip="p$t$yingxiaodao">
-                                <img src="${comment.user.head_url!}"
+                                <img src="${comment.user.headUrl!}"
                                      class="zm-list-avatar avatar"></a>
                             <a class="author-link" target="_blank" href="/user/${comment.user.id!}">${comment.user.name}</a>
                             </div>
@@ -100,7 +100,7 @@
                     <div class="zm-item-meta answer-actions clearfix js-contentActions">
                         <div class="zm-meta-panel">
                             <a itemprop="url" class="answer-date-link meta-item" target="_blank" href="">发布于
-                                ${comment.comment.created_date?string('yyyy-MM-dd HH:mm:ss')!}</a>
+                                ${comment.comment.createdDate?string('yyyy-MM-dd HH:mm:ss')}</a>
 
 
                             <a href="" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">

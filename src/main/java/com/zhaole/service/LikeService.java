@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 /**
  * Created by nowcoder on 2016/7/30.
  */
-public interface LikeService {
-
-
+public interface LikeService
+{
 
     public long getLikeCount(int entityType, int entityId) ;
 

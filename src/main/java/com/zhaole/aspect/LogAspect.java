@@ -21,7 +21,7 @@ public class LogAspect
 {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
     //* 返回值。类。方法。（参数）
-    @Before("execution(* com.zhaole.controller.*Controller.*(..))")
+    @Before("execution(* com.zhaole.controller.HomeController.*(..))")
     public void beforeMethod(JoinPoint joinPoint)
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -35,7 +35,7 @@ public class LogAspect
         logger.info("before method:" + stringBuilder.toString());
     }
 
-    @After("execution(* com.zhaole.controller.*Controller.*(..))")
+    @After("execution(* com.zhaole.controller.HomeController.*(..))")
     public void afterMethod()
     {
         logger.info("after method " + new Date());

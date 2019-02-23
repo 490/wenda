@@ -23,7 +23,8 @@ import java.util.concurrent.BlockingQueue;
 /**
  */
 @Service
-public class EventConsumer implements InitializingBean, ApplicationContextAware {
+public class EventConsumer implements InitializingBean, ApplicationContextAware
+{
     private static final Logger logger = LoggerFactory.getLogger(EventConsumer.class);
     private Map<EventType, List<EventHandler>> config = new HashMap<EventType, List<EventHandler>>();
     private ApplicationContext applicationContext;
@@ -90,7 +91,8 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
+    {
         this.applicationContext = applicationContext;
     }
 }

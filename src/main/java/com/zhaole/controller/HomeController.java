@@ -69,6 +69,7 @@ public class HomeController
             ViewObject vo = new ViewObject();
             vo.set("question",question);
             vo.set("user",userService.getUser(question.getUserId()));
+            //System.out.println("username--------------"+userService.getUser(question.getUserId()));
             viewObjectList.add(vo);
         }
         return viewObjectList;
