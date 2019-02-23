@@ -64,7 +64,12 @@ public class Message
         return conversationId;
     }
 
-    public void setConversationId(String conversationId) {
-        this.conversationId = conversationId;
+    public void setConversationId()
+    {
+        if (fromId < toId) {
+            conversationId = String.valueOf(fromId) + "_" + String.valueOf(toId);
+        } else {
+            conversationId = String.valueOf(toId) + "_" + String.valueOf(fromId);
+        }
     }
 }

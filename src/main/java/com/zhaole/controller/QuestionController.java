@@ -51,7 +51,6 @@ public class QuestionController
         {
             ViewObject vo = new ViewObject();
             vo.set("comment", comment);
-            logger.info(String.valueOf(comment.getId()));
             //判断是否是我喜欢的
             if (hostHolder.getUser() == null)
             {
