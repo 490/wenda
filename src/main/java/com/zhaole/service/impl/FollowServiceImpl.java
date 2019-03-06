@@ -3,6 +3,8 @@ package com.zhaole.service.impl;
 import com.zhaole.service.FollowService;
 import com.zhaole.util.JedisAdapter;
 import com.zhaole.util.RedisKeyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -21,17 +23,19 @@ public class FollowServiceImpl implements FollowService
 {
     @Autowired
     JedisAdapter jedisAdapter;
+    private static final Logger logger = LoggerFactory.getLogger(FollowServiceImpl.class);
 
     public boolean follow(int userId, int entityId, int entityType)
     {
         String followerKey = RedisKeyUtil.getFollowerKey(entityId,entityType);
-        String followeeKey = RedisKeyUtil.getFolloweeKey(entityId,entityType);
+        String followeeKey = RedisKeyUtil.getFolloweeKey(userId,entityType);
         Date date = new Date();
         Jedis jedis = jedisAdapter.getJedis();
         Transaction tx = jedisAdapter.multi(jedis);
         tx.zadd(followerKey, date.getTime(), String.valueOf(userId));
         tx.zadd(followeeKey, date.getTime(), String.valueOf(entityId));
         List<Object> ret = jedisAdapter.exec(tx, jedis);
+        logger.info("followServiceImpl:"+ret.size()+","+ret.get(0)+","+ret.get(1));
         return ret.size() == 2 && (Long)ret.get(0) > 0 && (Long)ret.get(1) > 0;
     }
 
@@ -70,7 +74,7 @@ public class FollowServiceImpl implements FollowService
     public List<Integer> getFollowers(int entityId, int entityType, int offset, int count)
     {
         String followerKey = RedisKeyUtil.getFollowerKey(entityId, entityType);
-        return getIdFromSet(jedisAdapter.zrevrange(followerKey, offset, count));
+        return getIdFromSet(jedisAdapter.zrevrange(followerKey, offset, offset+count));
     }
 
     // 获取我关注的实体的列表
@@ -84,7 +88,7 @@ public class FollowServiceImpl implements FollowService
     public List<Integer> getFollowees(int entityId, int entityType, int offset, int count)
     {
         String followeeKey = RedisKeyUtil.getFolloweeKey(entityId, entityType);
-        return getIdFromSet(jedisAdapter.zrevrange(followeeKey, offset, count));
+        return getIdFromSet(jedisAdapter.zrevrange(followeeKey, offset, offset+count));
     }
 
     //统计粉丝的数量

@@ -78,6 +78,7 @@ public class JedisAdapter implements InitializingBean
             return tx.exec();   //执行事务
         }catch (Exception e){
             logger.error("事务启动异常" +  e.getMessage());
+            tx.discard();
         }finally {
             //当事务不为空的时候要将其关闭
             if (tx != null)
@@ -85,7 +86,7 @@ public class JedisAdapter implements InitializingBean
                 try{
                     tx.close();
                 }catch (Exception e){
-                    logger.error("发生异常" + e.getMessage());
+                    logger.error("事务关闭异常" + e.getMessage());
                 }
             }
             //把jedis关闭

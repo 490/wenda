@@ -54,14 +54,14 @@ public class Feed
 
     public void setData(String data) {
         this.data = data;
+        this.jsonObject = JSONObject.parseObject(data);
     }
 
-    public JSONObject getJsonObject() {
-        return jsonObject;
+    public String getJsonObject(String key)
+    {
+        return jsonObject== null ? null : jsonObject.getString(key);
     }
 
-    public void setJsonObject(JSONObject jsonObject) {
-        this.jsonObject = jsonObject;
-    }
+
 
 }

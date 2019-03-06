@@ -12,8 +12,11 @@ import com.zhaole.service.FeedService;
 import com.zhaole.service.FollowService;
 import com.zhaole.service.QuestionService;
 import com.zhaole.service.UserService;
+import com.zhaole.service.impl.UserServiceImpl;
 import com.zhaole.util.JedisAdapter;
 import com.zhaole.util.RedisKeyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,12 +41,14 @@ public class FeedHandler implements EventHandler
     JedisAdapter jedisAdapter;
     @Autowired
     QuestionService questionService;
+    private static final Logger logger = LoggerFactory.getLogger(FeedHandler.class);
 
     private String buildFeedData(EventModel eventModel)
     {
         Map<String, String> map = new HashMap<String, String>();
         //触发用户是通用的
         User actor = userService.getUser(eventModel.getActorId());
+        logger.info("FeedHandler.build: actorid=="+ actor.getId());
         if(actor == null)
         {
             return null;

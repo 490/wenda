@@ -8,7 +8,10 @@ import com.zhaole.service.CommentService;
 import com.zhaole.service.FollowService;
 import com.zhaole.service.QuestionService;
 import com.zhaole.service.UserService;
+import com.zhaole.service.impl.UserServiceImpl;
 import com.zhaole.util.WendaUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +40,7 @@ public class FollowController
     HostHolder hostHolder;
     @Autowired
     EventProducer eventProducer;
+    private static final Logger logger = LoggerFactory.getLogger(FollowController.class);
 
     @RequestMapping(path = {"/followUser"},method = {RequestMethod.POST})
     @ResponseBody
@@ -48,7 +52,7 @@ public class FollowController
         }
         //返回是否关注成功
         boolean ret = followService.follow(hostHolder.getUser().getId(),userId,EntityType.ENTITY_USER);
-
+        logger.info("followController.followUser:"+ret);
         //jedisAdapter.lpush(key, toJSONString(eventModel))
         eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
                                     .setActorId(hostHolder.getUser().getId())
