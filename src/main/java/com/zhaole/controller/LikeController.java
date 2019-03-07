@@ -1,15 +1,13 @@
 package com.zhaole.controller;
 
-import com.zhaole.aspect.LogAspect;
-import com.zhaole.async.EventModel;
-import com.zhaole.async.EventProducer;
-import com.zhaole.async.EventType;
+import com.zhaole.messagequeue.EventModel;
+import com.zhaole.messagequeue.EventProducer;
+import com.zhaole.messagequeue.EventType;
 import com.zhaole.model.Comment;
 import com.zhaole.model.EntityType;
 import com.zhaole.model.HostHolder;
 import com.zhaole.service.CommentService;
 import com.zhaole.service.LikeService;
-import com.zhaole.service.MessageService;
 import com.zhaole.util.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

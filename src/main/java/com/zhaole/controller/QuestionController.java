@@ -1,9 +1,9 @@
 package com.zhaole.controller;
 
 
-import com.zhaole.async.EventModel;
-import com.zhaole.async.EventProducer;
-import com.zhaole.async.EventType;
+import com.zhaole.messagequeue.EventModel;
+import com.zhaole.messagequeue.EventProducer;
+import com.zhaole.messagequeue.EventType;
 import com.zhaole.model.*;
 import com.zhaole.service.*;
 import com.zhaole.util.WendaUtil;
@@ -45,12 +45,12 @@ public class QuestionController
     @RequestMapping(value = "/question/{qid}",method = {RequestMethod.GET})
     public String questionDetail(Model model, @PathVariable("qid") int qid)
     {
-        logger.info("↓↓↓↓↓↓------questionController.questionDetail()----------");
+        //logger.info("↓↓↓↓↓↓------questionController.questionDetail()----------");
 
         Question question = questionService.getById(qid);
         model.addAttribute("question", question);
         User u = userService.getUser(question.getUserId());
-        logger.info("user-------"+u.getId()+","+u.getName());
+        //logger.info("user-------"+u.getId()+","+u.getName());
         model.addAttribute("user", u);
 
         List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESTION);
@@ -100,7 +100,7 @@ public class QuestionController
         } else {
             model.addAttribute("followed", false);
         }
-        logger.info("↑↑↑↑↑↑------questionController.questionDetail()----------");
+        //logger.info("↑↑↑↑↑↑------questionController.questionDetail()----------");
         return "detail";
     }
 

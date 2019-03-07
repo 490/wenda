@@ -1,27 +1,26 @@
 package com.zhaole.controller;
 
-import com.zhaole.async.EventModel;
-import com.zhaole.async.EventProducer;
-import com.zhaole.async.EventType;
+import com.zhaole.messagequeue.EventModel;
+import com.zhaole.messagequeue.EventProducer;
+import com.zhaole.messagequeue.EventType;
 import com.zhaole.model.Comment;
 import com.zhaole.model.EntityType;
 import com.zhaole.model.HostHolder;
 import com.zhaole.service.CommentService;
 import com.zhaole.service.QuestionService;
 import com.zhaole.util.WendaUtil;
-import org.apache.catalina.Host;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 
 @Controller
-public class CommentController {
+public class CommentController
+{
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
     @Autowired
     HostHolder hostHolder;
@@ -56,6 +55,7 @@ public class CommentController {
             int count = commentService.getCommentCount(comment.getEntityId(),comment.getEntityType());
             questionService.updateCommentCount(comment.getEntityId(),count);
 
+            logger.info("commentController里调用eventProducer.fireEvent");
             eventProducer.fireEvent(new EventModel(EventType.COMMENT).setActorId(comment.getUserId())
                     .setEntityId(questionId));
 

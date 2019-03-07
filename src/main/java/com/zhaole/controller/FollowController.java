@@ -1,8 +1,8 @@
 package com.zhaole.controller;
 
-import com.zhaole.async.EventModel;
-import com.zhaole.async.EventProducer;
-import com.zhaole.async.EventType;
+import com.zhaole.messagequeue.EventModel;
+import com.zhaole.messagequeue.EventProducer;
+import com.zhaole.messagequeue.EventType;
 import com.zhaole.model.*;
 import com.zhaole.service.CommentService;
 import com.zhaole.service.FollowService;

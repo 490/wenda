@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService
     private LoginTicketDAO loginTicketDAO;
     public User getUser(int id)
     {
-        logger.info("userServiceImpl.getUser:"+id);
+        //logger.info("userServiceImpl.getUser:"+id);
         return userDAO.selectById(id);
     }
 
