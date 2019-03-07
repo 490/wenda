@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,8 @@ public class QuestionController
     FollowService followService;
     @Autowired
     EventProducer eventProducer;
+    @Autowired
+    FreeMarkerViewResolver freeMarkerViewResolver;
 
 
 
@@ -101,6 +104,8 @@ public class QuestionController
             model.addAttribute("followed", false);
         }
         //logger.info("↑↑↑↑↑↑------questionController.questionDetail()----------");
+
+
         return "detail";
     }
 

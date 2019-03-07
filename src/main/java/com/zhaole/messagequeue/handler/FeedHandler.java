@@ -47,11 +47,12 @@ public class FeedHandler implements EventHandler
         Map<String, String> map = new HashMap<String, String>();
         //触发用户是通用的
         User actor = userService.getUser(eventModel.getActorId());
-        logger.info("FeedHandler.build: actorid=="+ actor.getId());
         if(actor == null)
         {
             return null;
         }
+        logger.info("FeedHandler.build: actorid=="+ actor.getId());
+
         map.put("userId",String.valueOf(actor.getId()));
         map.put("userHead",actor.getHeadUrl());
         map.put("userName",actor.getName());
