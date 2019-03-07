@@ -1,5 +1,6 @@
 <#include "/header.html" encoding="UTF-8" parse=true>
-<link rel="stylesheet" href="../styles/detail.css">
+<link rel="stylesheet" href="../styles/detail.css" xmlns:https="http://www.w3.org/1999/xhtml"
+      xmlns:https="http://www.w3.org/1999/xhtml">
 <div class="zg-wrap zu-main clearfix with-indention-votebar" itemscope="" itemtype="http://schema.org/Question"
      id="zh-single-question-page" data-urltoken="36301524" role="main">
     <div class="zu-main-content">
@@ -79,9 +80,9 @@
                         <div class="zm-item-answer-author-info">
                             <a class="zm-item-link-avatar avatar-link" href="" target="_blank"
                                data-tip="p$t$yingxiaodao">
-                                <img src="${comment.user.headUrl!}"
+                                <img src="${(comment.user.headUrl)!}"
                                      class="zm-list-avatar avatar"></a>
-                            <a class="author-link" target="_blank" href="/user/${comment.user.id!}">${comment.user.name}</a>
+                            <a class="author-link" target="_blank" href="/user/${(comment.user.id)!}">${(comment.user.name)!}</a>
                             </div>
                         <div class="zm-item-vote-info" data-votecount="28" data-za-module="VoteInfo">
                                 <span class="voters text">
@@ -120,7 +121,7 @@
             </div>
             <a name="draft"></a>
             <form action="/addComment" method="post" id="commentform">
-                <input type="hidden" name="question_id" value="${question.id!}"/>
+                <input type="hidden" name="questionId" value="${question.id}"/>
             <div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap">
                 <div class="zm-editable-editor-wrap" style="">
                     <div class="zm-editable-editor-outer">
@@ -133,6 +134,20 @@
                             <span class=" zg-right">
                                 <button type="submit" class="submit-button zg-btn-blue">发布回答</button></span>
                     </div>
+                    <!--h1 ${verifyInfo!} />
+                    <div>
+                        <img alt="验证码" onclick = "this.src='/defaultKaptcha?d='+new Date()*1" src="/defaultKaptcha" />
+                    </div>
+                    <form-- action="imgvrifyControllerDefaultKaptcha">
+                        <input type="text" name="vrifyCode" />
+                        <div class="zm-command clearfix">
+                            <span class=" zg-right">
+                                <button type="submit" class="submit-button zg-btn-blue">发布回答</button></span>
+                        </div>
+                    </form-->
+
+
+
                 </div>
             </div>
             </form>

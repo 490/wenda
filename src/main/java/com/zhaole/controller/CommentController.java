@@ -1,5 +1,8 @@
 package com.zhaole.controller;
 
+import com.zhaole.async.EventModel;
+import com.zhaole.async.EventProducer;
+import com.zhaole.async.EventType;
 import com.zhaole.model.Comment;
 import com.zhaole.model.EntityType;
 import com.zhaole.model.HostHolder;
@@ -26,8 +29,11 @@ public class CommentController {
     CommentService commentService;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    EventProducer eventProducer;
 
-    @RequestMapping(path = {"/addCommnet"},method = {RequestMethod.POST})
+
+    @RequestMapping(path = {"/addComment"})
     public String addComment(@RequestParam("questionId") int questionId,
                              @RequestParam("content") String content)
     {
@@ -45,9 +51,14 @@ public class CommentController {
             comment.setEntityId(questionId);
             comment.setEntityType(EntityType.ENTITY_QUESTION);
             commentService.addComment(comment);
+
             //在这个questionid，及类型是question的数量，comment表里
             int count = commentService.getCommentCount(comment.getEntityId(),comment.getEntityType());
             questionService.updateCommentCount(comment.getEntityId(),count);
+
+            eventProducer.fireEvent(new EventModel(EventType.COMMENT).setActorId(comment.getUserId())
+                    .setEntityId(questionId));
+
         }catch (Exception e){
             logger.error("增加评论失败"+e.getMessage());
         }

@@ -1,4 +1,4 @@
-package com.zhaole.configuration;
+package com.zhaole.util;
 
 import com.zhaole.interceptor.LoginRequiredInterceptor;
 import com.zhaole.interceptor.PasswordInterceptor;

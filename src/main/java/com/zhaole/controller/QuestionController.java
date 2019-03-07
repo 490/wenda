@@ -1,6 +1,9 @@
 package com.zhaole.controller;
 
 
+import com.zhaole.async.EventModel;
+import com.zhaole.async.EventProducer;
+import com.zhaole.async.EventType;
 import com.zhaole.model.*;
 import com.zhaole.service.*;
 import com.zhaole.util.WendaUtil;
@@ -34,6 +37,10 @@ public class QuestionController
     LikeService likeService;
     @Autowired
     FollowService followService;
+    @Autowired
+    EventProducer eventProducer;
+
+
 
     @RequestMapping(value = "/question/{qid}",method = {RequestMethod.GET})
     public String questionDetail(Model model, @PathVariable("qid") int qid)
@@ -42,7 +49,9 @@ public class QuestionController
 
         Question question = questionService.getById(qid);
         model.addAttribute("question", question);
-        model.addAttribute("user", userService.getUser(question.getUserId()));
+        User u = userService.getUser(question.getUserId());
+        logger.info("user-------"+u.getId()+","+u.getName());
+        model.addAttribute("user", u);
 
         List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESTION);
         List<ViewObject> comments = new ArrayList<ViewObject>();
@@ -113,8 +122,13 @@ public class QuestionController
             }
             if(questionService.addQuestion(question) > 0)
             {
+                eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
+                        .setActorId(question.getUserId()).setEntityId(question.getId())
+                        .setExt("title", question.getTitle()).setExt("content", question.getContent()));
                 return WendaUtil.getJSONString(0);
             }
+
+
         }catch (Exception e){
             logger.error("增加题目失败" + e.getMessage());
         }
