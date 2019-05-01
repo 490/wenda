@@ -1,0 +1,18 @@
+# WendaApplication
+
+@SpringBootApplication是一个复合注解，包括@ComponentScan，和@SpringBootConfiguration，@EnableAutoConfiguration。
+
+```aidl
+@SpringBootConfiguration继承自@Configuration，二者功能也一致，标注当前类是配置类，并会将当前类内声明的一个或多个以@Bean注解标记的方法的实例纳入到srping容器中，并且实例名就是方法名。
+@EnableAutoConfiguration的作用启动自动的配置，@EnableAutoConfiguration注解的意思就是Springboot根据你添加的jar包来配置你项目的默认配置，比如根据spring-boot-starter-web ，来判断你的项目是否需要添加了webmvc和tomcat，就会自动的帮你配置web项目中所需要的默认配置。在下面博客会具体分析这个注解，快速入门的demo实际没有用到该注解。
+@ComponentScan，扫描当前包及其子包下被@Component，@Controller，@Service，@Repository注解标记的类并纳入到spring容器中进行管理。是以前的<context:component-scan>（以前使用在xml中使用的标签，用来扫描包配置的平行支持）。所以本demo中的User为何会被spring容器管理。
+
+```
+SpringBoot总是尝试根据我们的jar依赖，来为我们的项目进行一些自动配置以减轻开发者环境搭建的负担，例如我们项目中依赖了spring-boot-starter-web，SpringBoot则会自动为我们进行web环境的配置（如添加内置Tomcat、配置SpringMVC等）。 
+  SpringBoot自动配置的幕前黑手就是上一节中提到的@EnableAutoConfiguration注解。SpringBoot自动配置是非入侵的，我们可以开启我们自己的配置来替代自动配置，例如如果我们添加了自己的数据源配置，则SpringBoot默认内置的数据库服务则不会起作用。 
+
+
+
+如果我们通过代码生成定制的Banner，那么可以自己实现Banner接口，通过实现printBanner()方法，并结合使用SpringApplication.setBanner(​)或者SpringApplicationBuilder.banner()的方式来打印定制的Banner。
+
+SpringApplicationBuilder：该方法的作用是可以把项目打包成war包
