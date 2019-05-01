@@ -123,7 +123,7 @@ public class JedisAdapter implements InitializingBean
         return null;
     }
 
-    //把用户加到关注的列表中
+    //把用户加到关注的列表中 有序集合
     public long zadd(String key, double score, String value)
     {
         Jedis jedis  = null;
@@ -140,6 +140,7 @@ public class JedisAdapter implements InitializingBean
         }
         return 0;
     }
+    //计算集合中元素的数量
     public long zcard(String key)
     {
         Jedis jedis = null;
@@ -156,7 +157,7 @@ public class JedisAdapter implements InitializingBean
         }
         return 0;
     }
-
+    //返回有序集中，成员的分数值。 如果成员元素不是有序集 key 的成员，或 key 不存在，返回 nil
     public Double zscore(String key, String member)
     {       //Double是类，是double的实现类，double是属性
         Jedis jedis = null;
@@ -173,6 +174,11 @@ public class JedisAdapter implements InitializingBean
         }
         return null;
     }
+    /*
+        Redis Sadd 命令将一个或多个成员元素加入到集合中，已经存在于集合的成员元素将被忽略。
+        假如集合 key 不存在，则创建一个只包含添加的元素作成员的集合。
+        当集合 key 不是集合类型时，返回一个错误。
+        * */
     public long sadd(String key, String value)
     {
         Jedis jedis = null;
@@ -253,7 +259,7 @@ public class JedisAdapter implements InitializingBean
         }
         return null;
     }
-
+    //将一个或多个值插入到列表头部
     public long lpush(String key, String value)
     {
         Jedis jedis = null;

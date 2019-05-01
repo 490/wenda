@@ -16,7 +16,8 @@ import java.util.Properties;
 
 
 @Service
-public class MailSender implements InitializingBean {
+public class MailSender implements InitializingBean
+{
     private static final Logger logger = LoggerFactory.getLogger(MailSender.class);
     private JavaMailSenderImpl mailSender;
 
