@@ -33,7 +33,8 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public Map<String, Object> register(String username, String password) {
+    public Map<String, Object> register(String username, String password)
+    {
         Map<String ,Object> map = new HashMap<String,Object>();
         if(StringUtils.isBlank(username))
         {
