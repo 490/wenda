@@ -32,3 +32,28 @@ ok登录成功，否则登录失败
 # WebMvcConfigurer
 
 自己定义一些Handler，Interceptor，ViewResolver，MessageConverter
+
+# @Inherited注解
+
+   @Inherited 元注解是一个标记注解，@Inherited阐述了某个被标注的类型是被继承的。 
+如果一个使用了@Inherited修饰的annotation类型被用于一个class，则这个annotation将被用于该class的子类。 
+
+# @Documented注解
+
+Documented注解表明这个注释是由 javadoc记录的，在默认情况下也有类似的记录工具。 如果一个类型声明被注释了文档化，它的注释成为公共API的一部分。
+
+
+# Retention({RetentionPolicy.Runtime}) 注解
+
+RetentionPolicy这个枚举类型的常量描述保留注释的各种策略，它们与元注释(@Retention)一起指定注释要保留多长时间
+
+# @Target({ElementType.TYPE}) 注解
+
+ElementType 这个枚举类型的常量提供了一个简单的分类：注释可能出现在Java程序中的语法位置（这些常量与元注释类型(@Target)一起指定在何处写入注释的合法位置）
+
+
+
+
+
+
+
