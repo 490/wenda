@@ -23,13 +23,13 @@ public class RateLimitAspect
     //每秒只发出5个令牌，此处是单进程服务的限流,内部采用令牌捅算法实现
     private static   RateLimiter rateLimiter = RateLimiter.create(5.0);
 
-    //Service层切点  限流
+    //Service层切点  限流。Pointcut 是指那些方法需要被执行"AOP",是由"Pointcut Expression"来描述的.
     @Pointcut("@annotation(com.zhaole.util.RateLimit)")
-    public void ServiceAspect()
+    public void ServiceAspect()//切点签名
     {
 
     }
-
+    ///当需要改变目标方法的返回值时，只能使用Around方法；
     @Around("ServiceAspect()")
     public  Object around(ProceedingJoinPoint joinPoint)
     {

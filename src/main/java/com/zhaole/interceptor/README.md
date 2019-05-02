@@ -1,0 +1,3 @@
+定义一个Interceptor 非常简单方式也有几种，我这里简单列举两种
+1、类要实现Spring 的HandlerInterceptor 接口
+2、类继承实现了HandlerInterceptor 接口的类，例如 已经提供的实现了HandlerInterceptor 接口的抽象类HandlerInterceptorAdapter
