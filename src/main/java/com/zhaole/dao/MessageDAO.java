@@ -27,8 +27,12 @@ public interface MessageDAO
         (select * from message where from_id=#{userid} or toid=#{userid} order by created_date desc)
         tt group by conversation_id order by created_date desc limit #{offset},#{limit};
     * */
-    @Select({"select ", insertFields, " , count(id) as id from ( select * from ", tableName,
-            " where from_id=#{userId} or to_id=#{userId} order by created_date desc) tt group by conversation_id order by created_date desc limit #{offset}, #{limit}"})
+    @Select({"select ", insertFields, " , count(id) as id from " +
+            "( " +
+            "select * from ", tableName,
+            " where from_id=#{userId} or to_id=#{userId} order by created_date desc) " +
+
+            "tt group by conversation_id order by created_date desc limit #{offset}, #{limit}"})
     List<Message> getConversationList(@Param("userId") int userId,
                                       @Param("offset") int offset,
                                       @Param("limit") int limit);

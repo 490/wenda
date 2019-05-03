@@ -138,7 +138,21 @@ eventProducer.fireEvent
 
 
 
+# 看消息
 
+获取当前用户
+去数据库message表搜出与当前用户相关的信息
+```java
+int localUserId = hostHolder.getUser().getId();
+List<Message> conversationList = messageService.getConversationList(localUserId,0,10);
+
+@Select({"select ", insertFields, " , count(id) as id from " +
+            "( " +
+            "select * from ", tableName,
+            " where from_id=#{userId} or to_id=#{userId} order by created_date desc) " +
+
+            "tt group by conversation_id order by created_date desc limit #{offset}, #{limit}"})
+```
 
 
 
